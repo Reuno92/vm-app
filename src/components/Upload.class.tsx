@@ -1,11 +1,12 @@
-import {ChangeEvent, Component, FormEvent, Fragment} from "react";
-import {Alert, Button, Form, InputGroup} from "react-bootstrap";
-import setError from "../lib/setError";
+import {ChangeEvent, Component, FormEvent, Fragment} from 'react';
+import {Alert, Button, Form, InputGroup} from 'react-bootstrap';
+import setError from '../lib/setError';
+import axios, { AxiosResponse } from 'axios';
 
-const initState: { file: any, result: string|undefined, error: string|undefined } = {
-    file: undefined,
+const initState: { file: any, result: string | undefined, error: string | undefined } = {
+    file  : undefined,
     result: undefined,
-    error: undefined
+    error : undefined
 }
 
 export class UploadClass extends Component<any, any> {
@@ -21,7 +22,8 @@ export class UploadClass extends Component<any, any> {
 
     private handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        let formData = new FormData();
+
+        let formData: FormData = new FormData();
         formData.append("file", this.state?.file);
 
         this.setState({
@@ -30,13 +32,20 @@ export class UploadClass extends Component<any, any> {
             error: undefined
         });
 
-        fetch('http://localhost:2500/api/v1/uploads/video', {
-            method: 'POST',
-            body: formData,
-        })
-            .then( res => res.json() )
-            .then( data => this.setState({...this.state, result: setError(data.status), error: undefined}) )
-            .catch( (err: any) => this.setState({...this.state, error: setError(err?.status), result: undefined}) );
+        axios.post('http://localhost:2500/api/v1/uploads/video', formData)
+             .then( (response: AxiosResponse) => this.setState({
+                ...this.state,
+                result: setError(response?.data?.status),
+                error: undefined
+             }))
+             .catch( (err: any) => {
+                const ERROR = setError(err?.response?.data?.status);
+                this.setState({
+                    ...this.state,
+                    error: ERROR,
+                    result: undefined,
+                })
+             });
     }
 
     private handleFileInput(e: ChangeEvent<HTMLInputElement>): void {
@@ -62,7 +71,7 @@ export class UploadClass extends Component<any, any> {
         return (
             this.state.error && (
                 <Alert variant="danger">
-                    { this.state.danger }
+                    { this.state.error }
                 </Alert>
             )
         )
