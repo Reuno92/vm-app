@@ -1,24 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {Col, Nav, Row} from "react-bootstrap";
+import {UploadClass} from "./components/Upload.class";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+          <Nav>
+            <Nav.Item>
+                <Nav.Link className="" href="/home">Home</Nav.Link>
+            </Nav.Item>
+          </Nav>
       </header>
+      <main>
+        <Row>
+
+        </Row>
+        <Row>
+            <Col className="mx-3">
+                <UploadClass />
+            </Col>
+            <Col>
+
+            </Col>
+        </Row>
+      </main>
     </div>
   );
 }
