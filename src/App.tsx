@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.scss';
-import {Col, Nav, Row} from "react-bootstrap";
-import {UploadClass} from "./components/Upload.class";
+import {Col, Nav, Row} from 'react-bootstrap';
+import {UploadClass} from './components/class/Upload.class';
+import ListLowRes from "./components/hooks/list.lowres";
 
 function App() {
   return (
@@ -21,8 +22,8 @@ function App() {
             <Col className="mx-3">
                 <UploadClass />
             </Col>
-            <Col>
-
+            <Col className="mx-3">
+                <ListLowRes />
             </Col>
         </Row>
       </main>
