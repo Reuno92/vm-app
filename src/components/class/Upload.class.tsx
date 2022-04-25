@@ -41,20 +41,22 @@ export class UploadClass extends Component<any, any> {
                     progress: Math.round((data?.loaded * 100) / data?.total)
                 });
             }
-        })
-             .then( (response: AxiosResponse) => this.setState({
-                ...this.state,
-                result: setError(response?.data?.status),
-                error: undefined
-             }))
-             .catch( (err: any) => {
-                const ERROR = setError(err?.response?.data?.status);
-                this.setState({
-                    ...this.state,
-                    error: ERROR,
-                    result: undefined,
-                })
+        }).then( (response: AxiosResponse) => {
+             this.setState({
+                 ...this.state,
+                 result: setError(response?.data?.status),
+                 error: undefined
              });
+
+             this.props?.upload(true);
+        }).catch( (err: any) => {
+            const ERROR = setError(err?.response?.data?.status);
+            this.setState({
+                ...this.state,
+                error: ERROR,
+                result: undefined,
+            })
+        });
     }
 
     private handleFileInput(e: ChangeEvent<HTMLInputElement>): void {

@@ -1,10 +1,23 @@
-import {FC, Fragment} from "react";
+import {Dispatch, FC, Fragment, SetStateAction, useEffect} from "react";
 import {Alert, Button, ListGroup} from "react-bootstrap";
 import useFetch from "../hoc/videoLowRes.hoc";
 
-const ListLowRes: FC = () => {
+type ListLowResType = {
+    isUpload: boolean,
+    setIsUpload: Dispatch<SetStateAction<boolean>>,
+}
 
-    const { list, error } = useFetch('http://localhost:2500/api/v1/files/alllowres');
+const ListLowRes: FC<ListLowResType> = (props: ListLowResType) => {
+
+    const { isUpload, setIsUpload } = props;
+    const { list, error, refresh } = useFetch('http://localhost:2500/api/v1/files/alllowres');
+
+    useEffect( () => {
+        if (isUpload) {
+            refresh();
+            setIsUpload(false);
+        }
+    }, [isUpload])
 
     const handleClick = (e: any) => {
         console.log(e);
