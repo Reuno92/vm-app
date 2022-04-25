@@ -1,7 +1,7 @@
-import {ChangeEvent, Component, FormEvent, Fragment} from 'react';
-import {Alert, Button, Form, InputGroup, ProgressBar, Row, Col} from 'react-bootstrap';
+import {ChangeEvent, Component, FormEvent} from 'react';
+import {Alert, Button, Col, Form, InputGroup, ProgressBar, Row} from 'react-bootstrap';
 import setError from '../../lib/setError';
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 const initState: { file: any, result: string | undefined, progress: number | undefined, error: string | undefined } = {
     file  : undefined,
@@ -72,10 +72,10 @@ export class UploadClass extends Component<any, any> {
         return (
             this.state.progress && (
                 <Row className="align-items-center">
-                    <Col lg={2}>
+                    <Col lg={4}>
                         Upload Progress:
                     </Col>
-                    <Col lg={10}>
+                    <Col lg={8}>
                         <ProgressBar className="my-3" now={this.state.progress} label={`${this.state.progress}%`}/>
                     </Col>
                 </Row>
@@ -105,7 +105,7 @@ export class UploadClass extends Component<any, any> {
 
     render() {
         return (
-            <Fragment>
+            <section className="pb-5">
                 <Form method="post" encType="multipart/form-data"
                       onSubmit={ (e: FormEvent<HTMLFormElement>) => this.handleSubmit(e)}>
                     <Form.Group>
@@ -133,7 +133,7 @@ export class UploadClass extends Component<any, any> {
                 {
                     this.getError()
                 }
-            </Fragment>
+            </section>
         )
     }
 }

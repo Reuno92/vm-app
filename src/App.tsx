@@ -3,6 +3,7 @@ import './App.scss';
 import {Col, Nav, Row} from 'react-bootstrap';
 import {UploadClass} from './components/class/Upload.class';
 import ListLowRes from "./components/hooks/list.lowres";
+import PlayerLowRes from "./components/hooks/player.lowres";
 
 function App() {
 
@@ -18,15 +19,13 @@ function App() {
           </Nav>
       </header>
       <main>
-        <Row>
-
-        </Row>
-        <Row>
-            <Col className="mx-3">
+        <Row className="mx-3">
+            <Col lg={3}>
                 <UploadClass upload={setIsUpload} />
-            </Col>
-            <Col className="mx-3">
                 <ListLowRes isUpload={isUpload} setIsUpload={setIsUpload} />
+            </Col>
+            <Col lg={9}>
+                <PlayerLowRes />
             </Col>
         </Row>
       </main>
