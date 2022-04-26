@@ -33,10 +33,11 @@ The front end Application wil use TypeScript, React and will have 3 main React c
 * A player component that plays the video clicked in the list
   * It must be a React Hooks component.
   * It must get the stream from the "files" API route.
-  * The native <video> player must be used (No external wrapper or library).
+  * The native `<video>` player must be used (No external wrapper or library).
   * Player controls must be hidden.
   * A play/pause button must be added under the player.
   * And a range input to show the currentTime progress.
+  
 
 ## Project Structure
 | Name Folders         | Description                               |
@@ -48,6 +49,7 @@ The front end Application wil use TypeScript, React and will have 3 main React c
 | lib                  | Reusable utilises and library source code |
 | build                | Compiled source files will be placed here |
 | tests                | Test caseswill be placed here             |
+
 ## Dependencies
 
 * React: React is a JavaScript library for building user interfaces.
