@@ -1,8 +1,11 @@
 import {FC, useEffect, useRef, useState} from 'react';
-import {Alert, Button, Col, ProgressBar, Row} from 'react-bootstrap';
+import {Button, Col, ProgressBar, Row} from 'react-bootstrap';
 import data from '../../asset/test/PR_Ibrahim_Maalouf_30s_ENG_25nov.mp4';
+import useFetchVideo from "../hoc/useFetchVideo.hoc";
 
 const PlayerLowRes: FC<any> = () => {
+
+    const { video } = useFetchVideo();
 
     /**
      * Don't Move this lines…
@@ -14,6 +17,10 @@ const PlayerLowRes: FC<any> = () => {
         }
         return "00:00:00"
     }
+
+    useEffect( () => {
+        console.log(video);
+    }, [video]);
 
     /**
      * Player Button Play / Pause / Replay
@@ -32,7 +39,11 @@ const PlayerLowRes: FC<any> = () => {
      */
     const [progress, setProgress] = useState<number>(0);
 
+    /**
+     * At start component
+    */
     useEffect(() => {
+        /* try to initialize the duration of video */
         setTime(timer(VIDEO_CONTAINER_REF?.current?.duration));
         const actual = setInterval(() => {
             setCurrentTime(timer(VIDEO_CONTAINER_REF?.current?.currentTime));
@@ -44,18 +55,26 @@ const PlayerLowRes: FC<any> = () => {
             }
         }, 750);
 
+        console.log("received in component", video);
+
         return () => {
             clearInterval(actual);
             clearInterval(eachTimes);
         }
     }, []);
 
+    /***
+     * For initialize player state "replay"
+    */
     useEffect( () => {
         if (time !== '00:00:00' && currentTime === time) {
             setPlayerState('replay');
         }
     }, [currentTime, time]);
 
+    /**
+     * Change status of button
+     */
     const handlePlay = (): void => {
         if (playerState === 'play') {
             setTime(timer(VIDEO_CONTAINER_REF?.current?.duration));
@@ -87,29 +106,31 @@ const PlayerLowRes: FC<any> = () => {
 
     const noData = (): JSX.Element => {
         return (
-            !data && (
-                <Alert variant="info">
-                    No video selected
-                </Alert>
+            !video && (
+                <section className="d-flex justify-content-center align-items-center flex-column w-100 vh-75 p-5 rounded-3 bg-dark text-light">
+                    <h1>No video selected</h1>
+                    <p>Please click on button <span className="btn btn-primary">See</span> for download your low resolution file.</p>
+                    <br />
+                    <p>If the list don't appears, you must upload at least one file on our server:</p>
+                    <ol className="">
+                        <li className="mb-2">Choose a file at upload on your device.</li>
+                        <li className="mb-2">Click on button <span className="btn btn-primary">Submit</span></li>
+                    </ol>
+                </section>
             )
         ) as JSX.Element
-    }
+    };
 
     return (
         <section className="d-flex">
             {
-                noData()
-            }
-            {
-                data && (
+                video && (
                     <div className="flex-wrap">
                         <div className="d-flex justify-content-center">
                             <p className="position-absolute bg-danger text-white rounded-3 px-3 py-2 mt-1">
                                 <b>Warning !</b> It's low resolution 🤮
                             </p>
-                            <video ref={VIDEO_CONTAINER_REF} className="w-100">
-                                <source src={data}/>
-                            </video>
+                            <video ref={VIDEO_CONTAINER_REF} src={video} className="w-100" />
                         </div>
 
                         <Row className="controls my-3 align-items-center">
@@ -139,6 +160,9 @@ const PlayerLowRes: FC<any> = () => {
                         </Row>
                     </div>
                 )
+            }
+            {
+                noData()
             }
         </section>
     );
