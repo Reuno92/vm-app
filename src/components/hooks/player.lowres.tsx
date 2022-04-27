@@ -1,5 +1,5 @@
 import {FC, useEffect, useRef, useState} from 'react';
-import {Button, Col, ProgressBar, Row} from 'react-bootstrap';
+import {Button, Col, Row} from 'react-bootstrap';
 import data from '../../asset/test/PR_Ibrahim_Maalouf_30s_ENG_25nov.mp4';
 import useFetchVideo from "../hoc/useFetchVideo.hoc";
 
@@ -55,13 +55,16 @@ const PlayerLowRes: FC<any> = () => {
             }
         }, 750);
 
-        console.log("received in component", video);
-
         return () => {
             clearInterval(actual);
             clearInterval(eachTimes);
         }
     }, []);
+
+    useEffect(() =>
+        console.log("received in component", video)
+        , [video]
+    );
 
     /***
      * For initialize player state "replay"
@@ -109,7 +112,7 @@ const PlayerLowRes: FC<any> = () => {
             !video && (
                 <section className="d-flex justify-content-center align-items-center flex-column w-100 vh-75 p-5 rounded-3 bg-dark text-light">
                     <h1>No video selected</h1>
-                    <p>Please click on button <span className="btn btn-primary">See</span> for download your low resolution file.</p>
+                    <p>Please click on button <span className="btn btn-primary">See</span> in list for download your low resolution file.</p>
                     <br />
                     <p>If the list don't appears, you must upload at least one file on our server:</p>
                     <ol className="">
@@ -150,12 +153,8 @@ const PlayerLowRes: FC<any> = () => {
                                 <span>Total</span>
                                 <span>{time}</span>
                             </Col>
-                            <Col lg={8}>
-                                <ProgressBar
-                                    className="w-100"
-                                    striped
-                                    variant={ progress <= 25 ? "info" : progress <= 50 ? "primary" : progress <= 75 ? "success" : progress <= 99 ? "warning" : "danger" }
-                                    now={progress} />
+                            <Col lg={8} className="d-flex align-self-center">
+                                <input className="w-100" type="range" min={0} max={100} value={progress} />
                             </Col>
                         </Row>
                     </div>
