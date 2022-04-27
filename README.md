@@ -136,9 +136,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ### Still To Be Done
 
 #### Must Be Done 
- * Replace progress bar by input range for the currentTime.
- * Create a High Order Component for fetch video from api.
- * Manage event click on list for received low resolution video from server.
+ * ~~Replace progress bar by input range for the currentTime.~~ (Done)
+ * Create a High Order Component for fetch video from api. (Partially Done)
+ * ~~Manage event click on list for received low resolution video from server.~~ (Done)
  * Manage of the low resolution video from Player.
 
 #### Can Be Done
