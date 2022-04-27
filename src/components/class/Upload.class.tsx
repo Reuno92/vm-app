@@ -86,7 +86,7 @@ export class UploadClass extends Component<any, any> {
     private getResult(): JSX.Element {
         return (
             this.state.result && (
-                <Alert variant="success">
+                <Alert variant="success mt-3">
                     { this.state.result }
                 </Alert>
             )
@@ -96,7 +96,7 @@ export class UploadClass extends Component<any, any> {
     private getError(): JSX.Element {
         return (
             this.state.error && (
-                <Alert variant="danger">
+                <Alert variant="danger mt-3">
                     { this.state.error }
                 </Alert>
             )

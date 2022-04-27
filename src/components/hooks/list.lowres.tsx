@@ -41,11 +41,11 @@ const ListLowRes: FC<ListLowResType> = (props: ListLowResType) => {
             list && !error && list.length > 0 && (
                 <Fragment>
                     <h2>Your Low Res Files: </h2>
-                <ListGroup>
+                <ListGroup className="mb-5">
                     {
                         list.map( (item: string, index: number) => (
                             <ListGroup.Item className="d-flex justify-content-between align-items-center" key={index}>
-                                {item} <Button onClick={ () => handleClick(item)}>See</Button>
+                                <span className="text-truncate">{item}</span> <Button onClick={ () => handleClick(item)}>See</Button>
                             </ListGroup.Item>
                         ))
                     }
