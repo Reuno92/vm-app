@@ -6,7 +6,6 @@ const useFetchVideo = () => {
     const [ video, setVideo ] = useState<any>(null);
     const [ error, setError ] = useState<boolean>(false);
 
-
     useEffect(() => {
         const fetchVideo = () => {
             setError(false);
@@ -21,14 +20,16 @@ const useFetchVideo = () => {
             }).catch( () => setError(true));
         };
 
-        if (url) {
-            fetchVideo();
-            console.log("received in fetch", video);
+        return () => {
+            if (url) {
+                fetchVideo();
+            }
+            console.log("test: ", video);
         }
+
     }, [url]);
 
     return { error, url, video, setUrl };
 }
-
 
 export default useFetchVideo;
