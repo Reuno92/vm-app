@@ -1,11 +1,13 @@
 import {FC, useEffect, useRef, useState} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
-import data from '../../asset/test/PR_Ibrahim_Maalouf_30s_ENG_25nov.mp4';
-import useFetchVideo from "../hoc/useFetchVideo.hoc";
+import data from '../../../asset/test/PR_Ibrahim_Maalouf_30s_ENG_25nov.mp4';
+import useFetchVideo from "../../hoc/useFetchVideo.hoc";
+import PlayerErrorLowres from "./player.error.lowres";
+import PlayerNodataLowres from "./player.nodata.lowres";
 
 const PlayerLowRes: FC<any> = () => {
 
-    const { video } = useFetchVideo();
+    const { video, error } = useFetchVideo();
 
     /**
      * Don't Move this lines…
@@ -110,16 +112,15 @@ const PlayerLowRes: FC<any> = () => {
     const noData = (): JSX.Element => {
         return (
             !video && (
-                <section className="d-flex justify-content-center align-items-center flex-column w-100 vh-75 p-5 rounded-3 bg-dark text-light">
-                    <h1>No video selected</h1>
-                    <p>Please click on button <span className="btn btn-primary">See</span> in list for download your low resolution file.</p>
-                    <br />
-                    <p>If the list don't appears, you must upload at least one file on our server:</p>
-                    <ol className="">
-                        <li className="mb-2">Choose a file at upload on your device.</li>
-                        <li className="mb-2">Click on button <span className="btn btn-primary">Submit</span></li>
-                    </ol>
-                </section>
+                <PlayerNodataLowres />
+            )
+        ) as JSX.Element
+    };
+
+    const isError = (): JSX.Element => {
+        return (
+            error && (
+                <PlayerErrorLowres error={error} />
             )
         ) as JSX.Element
     };
@@ -162,6 +163,9 @@ const PlayerLowRes: FC<any> = () => {
             }
             {
                 noData()
+            }
+            {
+                isError()
             }
         </section>
     );

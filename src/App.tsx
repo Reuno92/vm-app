@@ -3,7 +3,7 @@ import './App.scss';
 import {Col, Nav, Row} from 'react-bootstrap';
 import {UploadClass} from './components/class/Upload.class';
 import ListLowRes from "./components/hooks/list.lowres";
-import PlayerLowRes from "./components/hooks/player.lowres";
+import PlayerLowRes from "./components/hooks/player/player.lowres";
 
 function App() {
 

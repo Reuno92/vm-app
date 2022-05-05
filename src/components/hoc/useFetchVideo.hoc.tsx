@@ -10,20 +10,18 @@ const useFetchVideo = () => {
     useEffect(() => {
         const fetchVideo = () => {
             setError(false);
-            axios.get(url, {
-                headers: {
-                    "range": 'bytes=0-'
-                }
-            }).then( (response: AxiosResponse<any>) => {
-                let source = new Blob( [response.data], { type: response.headers['content-type'] } );
-                let object = URL.createObjectURL(source);
-                setVideo(object);
-            }).catch( () => setError(true));
+            axios.get(url, { headers: { "range": 'bytes=0-' } })
+                .then(async (response: AxiosResponse<any>) => {
+                    let source = await new Blob([response.data], {type: response.headers['content-type']});
+                    let object = URL.createObjectURL(source);
+                    setVideo(object);
+                })
+                .catch(() => setError(true));
         };
 
         if (url) {
             fetchVideo();
-            console.log("received in fetch", video);
+            console.log("received in fetch", url, video);
         }
     }, [url]);
 
